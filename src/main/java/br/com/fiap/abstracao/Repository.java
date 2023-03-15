@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public abstract class Repository {
     public static final EntityManagerFactory factory = Persistence.createEntityManagerFactory(
-            LocalDate.now().getDayOfWeek() == DayOfWeek.MONDAY ? "maria-db" : "oracle-fiap"
+            LocalDate.now().getDayOfWeek() != DayOfWeek.WEDNESDAY ? "maria-db" : "oracle-fiap"
     );
     public static final EntityManager manager = factory.createEntityManager();
 }
