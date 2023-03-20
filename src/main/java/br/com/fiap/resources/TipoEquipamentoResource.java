@@ -22,17 +22,17 @@ public class TipoEquipamentoResource {
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         TipoEquipamento te = TipoEquipamentoRepository.findById(id);
-        Response.ResponseBuilder res;
+        Response.ResponseBuilder resp;
 
         if (te != null) {
-            res = Response.ok();
+            resp = Response.ok();
 
-            res.entity(te);
+            resp.entity(te);
         } else {
-            res = Response.status(404);
+            resp = Response.status(404);
         }
 
-        return res.build();
+        return resp.build();
     }
 
     @POST
