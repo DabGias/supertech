@@ -2,12 +2,13 @@ package br.com.fiap.resources;
 
 import br.com.fiap.domain.equipamento.model.TipoEquipamento;
 import br.com.fiap.domain.equipamento.repository.TipoEquipamentoRepository;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
+
+import java.net.URI;
 
 @Path("/tipo-equipamento")
 public class TipoEquipamentoResource {
@@ -19,7 +20,7 @@ public class TipoEquipamentoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public Response findById(@PathParam("/{id}") Long id) {
+    public Response findById(@PathParam("id") Long id) {
         TipoEquipamento te = TipoEquipamentoRepository.findById(id);
         Response.ResponseBuilder res;
 
@@ -32,5 +33,17 @@ public class TipoEquipamentoResource {
         }
 
         return res.build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response save(TipoEquipamento te) {
+        TipoEquipamento tipoEquip = TipoEquipamentoRepository.save(te);
+        final URI tipoEquipUri = UriBuilder
+                .fromResource(TipoEquipamentoResource.class)
+                .path("/{id}")
+                .build(tipoEquip.getId());
+
+        return Response.created(tipoEquipUri).entity(tipoEquip).build();
     }
 }

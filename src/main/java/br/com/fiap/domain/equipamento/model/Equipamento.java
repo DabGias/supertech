@@ -1,6 +1,8 @@
 package br.com.fiap.domain.equipamento.model;
 
+import br.com.fiap.domain.cliente.model.Cliente;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
@@ -27,15 +29,35 @@ public class Equipamento {
     @JoinColumn(
             name = "id_tp_equipamento",
             referencedColumnName = "id_tp_equipamento",
-            foreignKey = @ForeignKey(name = "fk_tb_tp_equipamento", value = ConstraintMode.CONSTRAINT)
+            foreignKey = @ForeignKey(
+                    name = "fk_tb_tp_equipamento",
+                    value = ConstraintMode.CONSTRAINT
+            )
     )
     private TipoEquipamento tipo;
 
+    @NotNull(message = "O nome do equipamento não pode ser nulo.")
     @Column(name = "nm_equipamento")
     private String nome;
 
+    @NotNull(message = "O número de série não pode ser nulo.")
     @Column(name = "nmr_serie_equipamento")
     private String numeroDeSerie;
+
+    @NotNull(message = "Todo equipamento deve pertencer a um cliente.")
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.REFRESH
+    )
+    @JoinColumn(
+            name = "id_cliente",
+            referencedColumnName = "id_cliente",
+            foreignKey = @ForeignKey(
+                    name = "fk_tb_cliente",
+                    value = ConstraintMode.CONSTRAINT
+            )
+    )
+    private Cliente cliente;
 
     public Equipamento() {}
 

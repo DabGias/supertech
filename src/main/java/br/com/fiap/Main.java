@@ -28,8 +28,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();
 
-        System.out.printf("O servidor foi startado com sucesso e funciona no endereço %s%n" +
-                "Digite ctrl + c para fechar o servidor%n", BASE_URI);
+        System.out.printf("O servidor foi startado com sucesso e funciona no endereço %s%n", BASE_URI);
         System.in.read();
         server.shutdown();
     }
